@@ -3,10 +3,12 @@ class hashMap {
   #loadFactor;
   #capacity;
   #table;
+  #keys;
   constructor() {
     this.#capacity = 16;
     this.#loadFactor = 0.75;
     this.#table = new Array(this.#capacity).fill(null);
+    this.#keys = new Array(this.#capacity).fill(null);
   }
 
   // Has function to create array indices using keys
@@ -21,6 +23,7 @@ class hashMap {
 
   // Set function to add a value using it's key to the table
   set(key, value) {
+    this.#keys.push(key);
     let index = this.hashCode(key);
     this.#table[index] = value;
   }
@@ -49,5 +52,30 @@ class hashMap {
   }
   clear() {
     this.#table.fill(null);
+  }
+  keys() {
+    let returnKeys = [];
+    for (let i = 0; i < this.#keys.length; i++) {
+      if (this.#keys[i] !== null) {
+        returnKeys.push(this.#keys[i]);
+      }
+    }
+    return returnKeys;
+  }
+  values() {
+    let returnValues = [];
+    for (let i = 0; i < this.#table.length; i++) {
+      if (this.#table[i] !== null) returnValues.push(this.#table);
+    }
+    return returnValues;
+  }
+  entries() {
+    let entries = [];
+    let keys = this.keys();
+    let values = this.values();
+    for (let i = 0; i < keys.length; i++) {
+      entries.push([keys[i], values[i]]);
+    }
+    return entries;
   }
 }
