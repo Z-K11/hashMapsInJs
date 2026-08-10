@@ -1,14 +1,16 @@
 // hashMap implementation
-class hashMap {
+export default class hashMap {
   #loadFactor;
   #capacity;
   #table;
   #keys;
+  #size;
   constructor() {
     this.#capacity = 16;
     this.#loadFactor = 0.75;
     this.#table = new Array(this.#capacity).fill(null);
-    this.#keys = new Array(this.#capacity).fill(null);
+    this.#keys = new Array(this.#capacity);
+    this.#size = 0;
   }
 
   // Has function to create array indices using keys
@@ -23,9 +25,15 @@ class hashMap {
 
   // Set function to add a value using it's key to the table
   set(key, value) {
-    this.#keys.push(key);
-    let index = this.hashCode(key);
+    const index = this.hash(key);
+    if (this.#keys[index] === undefined) {
+      this.#size++;
+      this.#keys[index] = key;
+    }
     this.#table[index] = value;
+    if (this.#size / this.#capacity >= this.#loadFactor) {
+      console.log('threshold exceeded');
+    }
   }
 
   // get function to retreive a value from the table using it's key
@@ -34,21 +42,17 @@ class hashMap {
   }
 
   has(key) {
-    return this.#table[key] !== null;
+    return this.#table[this.hash(key)] !== null;
   }
   remove(key) {
-    if (!(this.#table[key] !== null)) return false;
+    if (!(this.#table[this.hash(key)] !== null)) return false;
     else {
       this.#table[key] = null;
       return true;
     }
   }
   length() {
-    let count = 0;
-    for (let i = 0; i < this.#table.length; i++) {
-      if (this.#table[i] !== null) count++;
-    }
-    return count;
+    return this.#size;
   }
   clear() {
     this.#table.fill(null);
@@ -56,7 +60,7 @@ class hashMap {
   keys() {
     let returnKeys = [];
     for (let i = 0; i < this.#keys.length; i++) {
-      if (this.#keys[i] !== null) {
+      if (this.#keys[i] !== undefined) {
         returnKeys.push(this.#keys[i]);
       }
     }
@@ -65,7 +69,7 @@ class hashMap {
   values() {
     let returnValues = [];
     for (let i = 0; i < this.#table.length; i++) {
-      if (this.#table[i] !== null) returnValues.push(this.#table);
+      if (this.#table[i] !== null) returnValues.push(this.#table[i]);
     }
     return returnValues;
   }
