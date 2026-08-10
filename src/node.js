@@ -40,4 +40,17 @@ export class node {
   get nodeValue() {
     return this.#value;
   }
+
+  // returns key,value pair
+  returnEntries() {
+    return [this.#key, this.#value];
+  }
+
+  get nodekey() {
+    return this.#key;
+  }
+
+  set nodeValue(x) {
+    this.#value = x;
+  }
 }

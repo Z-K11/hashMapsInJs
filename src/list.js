@@ -7,32 +7,33 @@ export class list {
   #tail;
 
   // Counts the size of the list
-  static #sizeCounter = 0;
+  #sizeCounter;
 
   constructor() {
     // Initially we set our head pointer = null
     this.#head = null;
     this.#tail = null;
+    this.#sizeCounter = 0;
   }
 
   // function to push a value inside the linked list and create a new node
   append(key, value) {
-    list.#sizeCounter++;
     // checks if the head pointer is null meaning there are currently no nodes attached to the head pointer
     if (this.#head === null) {
+      this.#sizeCounter++;
       // attaches first node to the head pointer and the tail pointer because list size is one
-      this.#tail = new node(key, value, list.#sizeCounter - 1);
+      this.#tail = new node(key, value, this.#sizeCounter - 1);
       this.#head = this.#tail;
       return;
     } else {
       // recursive function to traverse to the end of the list and add the current node
-      this.#traverse(this.#head, key, value, list.#sizeCounter - 1);
+      this.#traverse(this.#head, key, value, this.#sizeCounter);
     }
   }
 
   // Function to add a value to the beginning of the list
   preAppend(value) {
-    list.#sizeCounter++;
+    this.#sizeCounter++;
     let temp = new node(value, 0);
     temp.nextNode = this.#head;
     this.#head = temp;
@@ -61,13 +62,18 @@ export class list {
 
   // returns the size of the list
   get size() {
-    return list.#sizeCounter;
+    return this.#sizeCounter;
   }
 
   // Fucntion to recursively traverse the list till we reach the end of the list
   #traverse(currentNode, key, value, index) {
+    if (currentNode.nodekey === key) {
+      currentNode.nodeValue = value;
+      return;
+    }
     // checks to see if we are at the last node
     if (currentNode.nextNode === null) {
+      this.#sizeCounter++;
       // if we are at the last node appends the new node to the next pointer of the current node
       this.#tail = new node(key, value, index);
       currentNode.nextNode = this.#tail;
