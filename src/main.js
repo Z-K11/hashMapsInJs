@@ -20,3 +20,4 @@ test.set('v', '23');
 console.log(test.keys());
 console.log(test.values());
 console.log(test.length());
+console.log(test.entries());

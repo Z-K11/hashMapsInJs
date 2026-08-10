@@ -154,4 +154,17 @@ export class list {
     }
     return values;
   }
+
+  returnAllEntries(currentNode = this.#head, entries = []) {
+    // this condition check if linked list is empty if it is we return null
+    if (currentNode === null) return null;
+    // if the node has a value we add it do the values array
+    if (currentNode.returnEntries() !== null) {
+      entries.push(currentNode.returnEntries());
+      // recursively call the function till we reach the end of the node
+      if (currentNode.nextNode !== null)
+        return this.returnAllEntries(currentNode.nextNode, entries);
+    }
+    return entries;
+  }
 }

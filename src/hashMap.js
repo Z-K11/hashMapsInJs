@@ -79,17 +79,16 @@ export default class hashMap {
   values() {
     let returnValues = [];
     for (let i = 0; i < this.#table.length; i++) {
-      if (this.#table[i].returnValues() !== null)
-        returnValues.push(this.#table[i].returnValues());
+      const bucket = this.#table[i].returnValues();
+      if (bucket !== null) returnValues.push(...bucket);
     }
     return returnValues;
   }
   entries() {
     let entries = [];
-    let keys = this.keys();
-    let values = this.values();
-    for (let i = 0; i < keys.length; i++) {
-      entries.push([keys[i], values[i]]);
+    for (let i = 0; i < this.#table.length; i++) {
+      if (this.#table[i].returnAllEntries() !== null)
+        entries.push(this.#table[i].returnAllEntries());
     }
     return entries;
   }
