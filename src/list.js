@@ -16,17 +16,17 @@ export class list {
   }
 
   // function to push a value inside the linked list and create a new node
-  append(value) {
+  append(key, value) {
     list.#sizeCounter++;
     // checks if the head pointer is null meaning there are currently no nodes attached to the head pointer
     if (this.#head === null) {
       // attaches first node to the head pointer and the tail pointer because list size is one
-      this.#tail = new node(value, list.#sizeCounter - 1);
+      this.#tail = new node(key, value, list.#sizeCounter - 1);
       this.#head = this.#tail;
       return;
     } else {
       // recursive function to traverse to the end of the list and add the current node
-      this.#traverse(this.#head, value, list.#sizeCounter - 1);
+      this.#traverse(this.#head, key, value, list.#sizeCounter - 1);
     }
   }
 
@@ -65,16 +65,16 @@ export class list {
   }
 
   // Fucntion to recursively traverse the list till we reach the end of the list
-  #traverse(currentNode, value, index) {
+  #traverse(currentNode, key, value, index) {
     // checks to see if we are at the last node
     if (currentNode.nextNode === null) {
       // if we are at the last node appends the new node to the next pointer of the current node
-      this.#tail = new node(value, index);
+      this.#tail = new node(key, value, index);
       currentNode.nextNode = this.#tail;
       return;
     } else {
       // keep traversing until we find the end of the node
-      this.#traverse(currentNode.nextNode, value, index);
+      this.#traverse(currentNode.nextNode, key, value, index);
     }
   }
 

@@ -5,10 +5,12 @@ export class node {
   #next;
   //Is used as a pointer that points to the next node
   #index;
-
+  //Stores keys of the hashmap
+  #key;
   //A varible to keep track of index of values inside linked list
-  constructor(value, index) {
+  constructor(key, value, index) {
     //constructor initializes the object with the value given and sets the next pointet to null
+    this.#key = key;
     this.#value = value;
     this.#next = null;
     this.#index = index;

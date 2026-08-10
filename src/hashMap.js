@@ -31,7 +31,7 @@ export default class hashMap {
       this.#size++;
       this.#keys[index] = key;
     }
-    this.#table[index].append(value);
+    this.#table[index].append(key, value);
     if (this.#size / this.#capacity > this.#loadFactor) {
       this.#capacity = this.#capacity * 2;
       const oldKeys = this.keys();
