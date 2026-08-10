@@ -79,7 +79,8 @@ export default class hashMap {
   values() {
     let returnValues = [];
     for (let i = 0; i < this.#table.length; i++) {
-      if (this.#table[i] !== null) returnValues.push(this.#table[i]);
+      if (this.#table[i].returnValues() !== null)
+        returnValues.push(this.#table[i].returnValues());
     }
     return returnValues;
   }
