@@ -16,7 +16,7 @@ export class list {
     this.#sizeCounter = 0;
   }
 
-  // function to push a value inside the linked list and create a new node
+  // function to push a key and value inside the linked list and create a new node
   append(key, value) {
     // checks if the head pointer is null meaning there are currently no nodes attached to the head pointer
     if (this.#head === null) {
@@ -67,7 +67,9 @@ export class list {
 
   // Fucntion to recursively traverse the list till we reach the end of the list
   #traverse(currentNode, key, value, index) {
+    // Check to see if current key already exists this means user wants to overwrite the value
     if (currentNode.nodekey === key) {
+      // Overwrite value
       currentNode.nodeValue = value;
       return;
     }
@@ -137,5 +139,19 @@ export class list {
       str += `( ${currentNode.nodeValue} ) -> `;
       return this.toString(currentNode.nextNode, str);
     }
+  }
+
+  // Returns all the values inside all the nodes in the linked list
+  returnValues(currentNode = this.#head, values = []) {
+    // this condition check if linked list is empty if it is we return null
+    if (currentNode === null) return null;
+    // if the node has a value we add it do the values array
+    if (currentNode.nodeValue !== null) {
+      values.push(currentNode.nodeValue);
+      // recursively call the function till we reach the end of the node
+      if (currentNode.nextNode !== null)
+        return this.returnValues(currentNode.nextNode, values);
+    }
+    return values;
   }
 }
