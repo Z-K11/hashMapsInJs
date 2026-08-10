@@ -50,9 +50,12 @@ export default class hashMap {
     return this.#table[this.hash(key)].returnValues();
   }
 
+  // checks if hash has a value for the key
   has(key) {
     return this.#table[this.hash(key)] !== null;
   }
+
+  // removes the node from the bucket which contains the key
   removeNode(key) {
     const index = this.hash(key);
     if (this.#table[this.hash(key)] === null) return false;
@@ -60,12 +63,19 @@ export default class hashMap {
       this.#table[index].keyRemove(key);
     }
   }
+
+  // returns the length of the hashtable
   length() {
     return this.#size;
   }
+
+  // clears all the indices of the hash table
   clear() {
-    this.#table.fill(null);
+    this.#table = Array.from({ length: this.#capacity }, () => new list());
+    this.#keys = [];
   }
+
+  // returns an array that lists all the keys currently held by the hashtable
   keys() {
     let returnKeys = [];
     for (let i = 0; i < this.#keys.length; i++) {
@@ -75,6 +85,8 @@ export default class hashMap {
     }
     return returnKeys;
   }
+
+  // returns all the values corresponding to stored keys
   values() {
     let returnValues = [];
     for (let i = 0; i < this.#table.length; i++) {
@@ -83,6 +95,8 @@ export default class hashMap {
     }
     return returnValues;
   }
+
+  // returns array containing key,value pairs inside buckets
   entries() {
     let entries = [];
     for (let i = 0; i < this.#table.length; i++) {
@@ -90,5 +104,12 @@ export default class hashMap {
         entries.push(...this.#table[i].returnAllEntries());
     }
     return entries;
+  }
+
+  // removes all the data stored at the hash key and also removes the key from key storage
+  remove(key) {
+    const index = this.hash(key);
+    if (this.#keys[index] === key) this.#keys[index] = undefined;
+    this.#table[index] = new list();
   }
 }

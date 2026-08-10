@@ -155,6 +155,7 @@ export class list {
     return values;
   }
 
+  // returns key,value pair for all the nodes in the linked list
   returnAllEntries(currentNode = this.#head, entries = []) {
     // this condition check if linked list is empty if it is we return null
     if (currentNode === null) return null;
@@ -167,15 +168,23 @@ export class list {
     }
     return entries;
   }
+
+  // removes the node which has the current key in linked list
   keyRemove(key, currentNode = this.#head) {
+    // checks if the list is empty and returns
     if (currentNode === null) return;
+    // if first node contained key remove it
     if (currentNode.nodekey === key) {
       this.#head = this.#head.nextNode;
       return;
     }
+    // iterate through the list until node containing key is identified
     while (currentNode.nextNode !== null) {
+      // storing the current node in temp
       const temp = currentNode;
+      // assigning next node to current node
       currentNode = currentNode.nextNode;
+      // if key found attaches previous node to the nextNode of current node
       if (currentNode.nodekey === key) {
         temp.nextNode = currentNode.nextNode;
       }

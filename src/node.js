@@ -46,10 +46,12 @@ export class node {
     return [this.#key, this.#value];
   }
 
+  // returns the key stored at the node
   get nodekey() {
     return this.#key;
   }
 
+  // sets the value for the current node
   set nodeValue(x) {
     this.#value = x;
   }
