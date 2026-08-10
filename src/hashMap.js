@@ -41,24 +41,27 @@ export default class hashMap {
       this.#size = 0;
       for (let i = 0; i < oldKeys.length; i++) {
         this.set(oldKeys[i], oldValues[i]);
-        console.log(`resizing-${i}`);
       }
     }
   }
 
   // get function to retreive a value from the table using it's key
   get(key) {
-    return this.#table[this.hash(key)];
+    return this.#table[this.hash(key)].returnValues();
   }
 
   has(key) {
     return this.#table[this.hash(key)] !== null;
   }
-  remove(key) {
-    if (!(this.#table[this.hash(key)] !== null)) return false;
+  removeNode(key) {
+    const index = this.hash(key);
+    if (this.#table[this.hash(key)] === null) return false;
     else {
-      this.#table[key] = null;
-      return true;
+      if (this.#keys[index] === key) {
+        this.#keys[index] = undefined;
+        this.#table[index].keyRemove(key);
+        return true;
+      }
     }
   }
   length() {

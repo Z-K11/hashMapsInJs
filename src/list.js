@@ -167,4 +167,18 @@ export class list {
     }
     return entries;
   }
+  keyRemove(key, currentNode = this.#head) {
+    if (currentNode === null) return;
+    if (currentNode.nodekey === key) {
+      this.#head = this.#head.nextNode;
+      return;
+    }
+    while (currentNode.nextNode !== null) {
+      const temp = currentNode;
+      currentNode = currentNode.nextNode;
+      if (currentNode.nodekey === key) {
+        temp.nextNode = currentNode.nextNode;
+      }
+    }
+  }
 }
