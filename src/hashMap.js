@@ -57,11 +57,7 @@ export default class hashMap {
     const index = this.hash(key);
     if (this.#table[this.hash(key)] === null) return false;
     else {
-      if (this.#keys[index] === key) {
-        this.#keys[index] = undefined;
-        this.#table[index].keyRemove(key);
-        return true;
-      }
+      this.#table[index].keyRemove(key);
     }
   }
   length() {
@@ -91,7 +87,7 @@ export default class hashMap {
     let entries = [];
     for (let i = 0; i < this.#table.length; i++) {
       if (this.#table[i].returnAllEntries() !== null)
-        entries.push(this.#table[i].returnAllEntries());
+        entries.push(...this.#table[i].returnAllEntries());
     }
     return entries;
   }

@@ -23,3 +23,4 @@ console.log(test.length());
 console.log(test.entries());
 test.removeNode('apple');
 console.log(test.entries());
+console.log(test.keys());
