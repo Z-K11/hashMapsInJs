@@ -1,3 +1,4 @@
+import { list } from './list.js';
 // hashMap implementation
 export default class hashMap {
   #loadFactor;
@@ -8,7 +9,7 @@ export default class hashMap {
   constructor() {
     this.#capacity = 16;
     this.#loadFactor = 0.75;
-    this.#table = new Array(this.#capacity).fill(null);
+    this.#table = Array.from({ length: this.#capacity }, () => new list());
     this.#keys = new Array(this.#capacity);
     this.#size = 0;
   }
@@ -30,12 +31,12 @@ export default class hashMap {
       this.#size++;
       this.#keys[index] = key;
     }
-    this.#table[index] = value;
+    this.#table[index].append(value);
     if (this.#size / this.#capacity > this.#loadFactor) {
       this.#capacity = this.#capacity * 2;
       const oldKeys = this.keys();
       const oldValues = this.values();
-      this.#table = new Array(this.#capacity).fill(null);
+      this.#table = Array.from({ length: this.#capacity }, () => new list());
       this.#keys = new Array(this.#capacity);
       this.#size = 0;
       for (let i = 0; i < oldKeys.length; i++) {
