@@ -31,8 +31,17 @@ export default class hashMap {
       this.#keys[index] = key;
     }
     this.#table[index] = value;
-    if (this.#size / this.#capacity >= this.#loadFactor) {
-      console.log('threshold exceeded');
+    if (this.#size / this.#capacity > this.#loadFactor) {
+      this.#capacity = this.#capacity * 2;
+      const oldKeys = this.keys();
+      const oldValues = this.values();
+      this.#table = new Array(this.#capacity).fill(null);
+      this.#keys = new Array(this.#capacity);
+      this.#size = 0;
+      for (let i = 0; i < oldKeys.length; i++) {
+        this.set(oldKeys[i], oldValues[i]);
+        console.log(`resizing-${i}`);
+      }
     }
   }
 
